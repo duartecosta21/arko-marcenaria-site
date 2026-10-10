@@ -81,7 +81,7 @@
   gallery.addEventListener('click',e=>{if(galleryDragged){e.preventDefault();e.stopImmediatePropagation();galleryDragged=false;}},true);
   const environment=document.querySelector('.environments');
   const pauseButton=document.querySelector('.environment-pause');
-  pauseButton.addEventListener('click',()=>{const paused=pauseButton.getAttribute('aria-pressed')!=='true';pauseButton.setAttribute('aria-pressed',String(paused));pauseButton.setAttribute('aria-label',paused?'Retomar faixa de ambientes':'Pausar faixa de ambientes');pauseButton.innerHTML=paused?'<span aria-hidden="true">▷</span>':'<span aria-hidden="true">Ⅱ</span>';environment.classList.toggle('is-paused',paused);});
+  pauseButton.addEventListener('click',()=>{const paused=pauseButton.getAttribute('aria-pressed')!=='true';pauseButton.setAttribute('aria-pressed',String(paused));pauseButton.setAttribute('aria-label',paused?'Retomar faixa de ambientes':'Pausar faixa de ambientes');pauseButton.innerHTML=paused?'<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg>':'<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg>';environment.classList.toggle('is-paused',paused);});
   const root=document.documentElement;
   const hero=document.querySelector('.hero');
   const header=document.querySelector('.header');

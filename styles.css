@@ -31,3 +31,5 @@
 @media(max-width:760px){.footer-bottom{margin-top:0}.gallery-navigation{margin-top:23px}.portfolio-toolbar{display:flex;flex-wrap:wrap;gap:16px}.portfolio-toolbar .filters{flex:1 1 250px}.portfolio-toolbar .gallery-controls{margin-left:auto}}
 
 .project-origin{display:inline-block;font-size:11px;color:var(--muted);border-bottom:1px solid #34443f40;margin-top:12px;line-height:1.6}.project-origin:hover{color:var(--green);border-color:var(--green)}
+
+.ui-icon{display:inline-block;width:1em;height:1em;vertical-align:middle;flex-shrink:0}.dialog-close{display:grid;place-items:center}.lightbox>button{display:grid;place-items:center}
