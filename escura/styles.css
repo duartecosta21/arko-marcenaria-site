@@ -62,8 +62,8 @@
 /* Alternative from the commercial proposal: black, sand and wood-grain lines. */
 :root{--deep:#171712;--paper:#e7e4dd;--ink:#282724;--muted:#67645c;--line:#cdc8bd;--black:#080808;--charcoal:#1d1d1b;--light:#efede7;--dark-muted:#bcb9b0;--dark-line:#d7bb953d}
 body{background:var(--black)}
-.header{background:var(--black);color:var(--light)}
-.header.has-scrolled{background:#080808f5;box-shadow:0 8px 30px #00000030}
+.header{background:var(--green);color:var(--light)}
+.header.has-scrolled{background:#2d3e37f2;box-shadow:0 8px 30px #00000030}
 .hero{background:var(--black);color:var(--light)}
 .hero-copy{background:radial-gradient(ellipse at -12% 4%,#6d592e3d 0,transparent 56%),var(--black)}
 .hero h1{color:var(--beige)}
@@ -134,7 +134,7 @@ dialog::backdrop{background:#000000e8}
 .button-green:hover{background:var(--charcoal)}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline-color:var(--beige)}
 .about a:focus-visible,.questions summary:focus-visible,dialog a:focus-visible,dialog button:focus-visible{outline-color:#75572e}
-@media(max-width:760px){.header nav{background:var(--black)}.steps li{padding:20px 16px 24px 0;min-height:0}.steps li:before{left:80px}.steps p{padding-right:0}.about-image{padding:18px 18px 14px}}
+@media(max-width:760px){.header nav{background:var(--green)}.steps li{padding:20px 16px 24px 0;min-height:0}.steps li:before{left:80px}.steps p{padding-right:0}.about-image{padding:18px 18px 14px}}
 @media(max-width:380px){.steps li:before{left:68px}.steps li{padding-right:13px}}
 .steps h3,.steps p{padding-left:18px}
 .process .button{border-color:#d7bb9570;background:transparent;color:var(--beige)}
