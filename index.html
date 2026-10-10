@@ -16,6 +16,8 @@
   <link rel="preload" href="assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="assets/logo-arko.png" type="image/png">
   <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="comparison.css?v=2">
+  <script src="comparison.js?v=1" defer></script>
   <script src="site.js?v=7" defer></script>
 </head>
 <body>
@@ -61,6 +63,33 @@
         <figure class="gallery-item gallery-small" data-category="paineis"><button class="project-photo" type="button" data-photo="assets/projeto-jantar-1200.webp" data-caption="Marcenaria na sala de jantar. Visualização do projeto." aria-label="Ampliar imagem: Marcenaria na sala de jantar"><img src="assets/projeto-jantar-480.webp" srcset="assets/projeto-jantar-480.webp 480w, assets/projeto-jantar-1200.webp 976w" sizes="(max-width:760px) 88vw, 35vw" width="976" height="1280" loading="lazy" alt="Visualização de sala de jantar com aparador amadeirado, espelho e mesa redonda."><span class="photo-expand" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></button><figcaption><h3>Marcenaria na sala de jantar</h3><span>Visualização do projeto</span><a class="project-origin" href="https://www.instagram.com/arkomarcenaria/p/DLneO0NPako/" target="_blank" rel="noopener noreferrer" aria-label="Ver publicação: Marcenaria na sala de jantar">Ver publicação no Instagram</a></figcaption></figure>
       </div>
       <div class="gallery-navigation"><p class="gallery-status" aria-live="polite">Explore <span class="gallery-total">12</span> imagens</p><div class="gallery-progress" aria-hidden="true"><span></span></div></div>
+    </section>
+    <section class="comparison-section section-wrap" id="antes-depois" aria-labelledby="comparison-title">
+      <div class="comparison-layout">
+        <div class="comparison-copy">
+          <p class="small-label">Veja a transformação</p>
+          <h2 id="comparison-title">O que a marcenaria transforma.</h2>
+          <p>Explore os móveis, os painéis e os acabamentos que compõem este ambiente.</p>
+          <p class="comparison-disclosure" id="comparison-disclosure">O antes é uma simulação por IA feita a partir da foto final, não um registro da obra. O depois mostra a marcenaria real da Arko.</p>
+        </div>
+        <div class="comparison-view">
+          <div class="comparison-stage" data-comparison data-before-label="antes simulado por IA" data-after-label="depois em foto real">
+            <figure class="comparison-layer comparison-before">
+              <img src="assets/cozinha-antes-ia-960.webp" srcset="assets/cozinha-antes-ia-480.webp 480w, assets/cozinha-antes-ia-960.webp 960w" sizes="(max-width:760px) calc(100vw - 48px), 48vw" width="960" height="1280" loading="lazy" alt="Simulação por IA do mesmo enquadramento da cozinha, sem os móveis, painéis e forro de madeira.">
+              <figcaption><span class="comparison-label">Antes (simulação por IA).</span> Ilustração do espaço sem a marcenaria.</figcaption>
+            </figure>
+            <figure class="comparison-layer comparison-after">
+              <img src="assets/cozinha-960.webp" srcset="assets/cozinha-480.webp 480w, assets/cozinha-960.webp 960w, assets/cozinha-1440.webp 1440w" sizes="(max-width:760px) calc(100vw - 48px), 48vw" width="960" height="1280" loading="lazy" alt="Foto real da cozinha Arko com armários, painéis, ilha ripada e forro de madeira.">
+              <figcaption><span class="comparison-label">Depois (foto real).</span> Marcenaria da Arko.</figcaption>
+            </figure>
+            <span class="comparison-corner-label before" aria-hidden="true">Antes (simulação IA)</span>
+            <span class="comparison-corner-label after" aria-hidden="true">Depois (foto real)</span>
+            <div class="comparison-divider" aria-hidden="true"><span class="comparison-grip"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5M12 6v12"/></svg></span></div>
+            <input type="range" min="0" max="100" step="1" value="50" aria-label="Comparar antes simulado e depois real" aria-describedby="comparison-disclosure comparison-instruction" hidden>
+          </div>
+          <p class="comparison-instruction" id="comparison-instruction">Compare as duas versões do ambiente.</p>
+        </div>
+      </div>
     </section>
     <section class="follow-up wood-pattern" id="acompanhamento">
       <div class="follow-up-photo"><img src="assets/cozinha-integrada-480.webp" width="480" height="853" loading="lazy" alt="Vista ampla de uma cozinha com forro de madeira, iluminação embutida e marcenaria integrada."></div>
