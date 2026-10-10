@@ -41,15 +41,15 @@
   });
   const quoteDialog=document.querySelector('#quote-dialog');
   const message=document.querySelector('#prepared-message');
-  const emailLink=document.querySelector('#open-email');
-  function setEmailLink(){emailLink.href='mailto:arkomarcenaria@gmail.com?subject='+encodeURIComponent('Pedido de orçamento | Arko Marcenaria')+'&body='+encodeURIComponent(message.value);}
-  message.addEventListener('input',setEmailLink);
+  const whatsappLink=document.querySelector('#open-whatsapp');
+  function setWhatsAppLink(){whatsappLink.href='https://wa.me/5519981547979?text='+encodeURIComponent(message.value);}
+  message.addEventListener('input',setWhatsAppLink);
   document.querySelector('#quote-form').addEventListener('submit',e=>{
     e.preventDefault();
     const form=e.currentTarget; if(!form.reportValidity())return;
     const values=new FormData(form);
     message.value=['Olá, equipe Arko!','',`Meu nome é ${values.get('nome').trim()}. Gostaria de conversar sobre um projeto de marcenaria.`,`Cidade: ${values.get('cidade').trim()}`,`Ambiente: ${values.get('ambiente')}`,values.get('projeto').trim()?`Sobre o projeto: ${values.get('projeto').trim()}`:'','', 'Podemos conversar sobre uma proposta?'].filter((s,i,a)=>s!==''||a[i-1]!=='').join('\n');
-    setEmailLink();track('quote_prepared',{environment:values.get('ambiente')});quoteDialog.showModal();
+    setWhatsAppLink();track('quote_prepared',{environment:values.get('ambiente')});quoteDialog.showModal();
   });
   document.querySelector('#open-privacy').addEventListener('click',()=>document.querySelector('#privacy-dialog').showModal());
   // Motion and gallery navigation are native browser features, with no external runtime.
