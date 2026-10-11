@@ -61,11 +61,15 @@
   let galleryFrame=0;
   function updateGalleryNavigation(){
     galleryFrame=0;
-    const max=Math.max(0,gallery.scrollWidth-gallery.clientWidth);
-    previousGallery.disabled=gallery.scrollLeft<3;
-    nextGallery.disabled=max<3||gallery.scrollLeft>=max-3;
-    galleryTotal.textContent=String(items.filter(item=>!item.hidden).length);
-    galleryProgress.style.setProperty('--gallery-progress',max?String(.12+.88*Math.min(1,Math.max(0,gallery.scrollLeft/max))):'1');
+    // Read geometry before changing button states or text.
+    const width=gallery.clientWidth;
+    const left=gallery.scrollLeft;
+    const max=Math.max(0,gallery.scrollWidth-width);
+    const total=String(items.filter(item=>!item.hidden).length);
+    previousGallery.disabled=left<3;
+    nextGallery.disabled=max<3||left>=max-3;
+    if(galleryTotal.textContent!==total)galleryTotal.textContent=total;
+    galleryProgress.style.setProperty('--gallery-progress',max?String(.12+.88*Math.min(1,Math.max(0,left/max))):'1');
   }
   const moveGallery=direction=>gallery.scrollBy({left:direction*gallery.clientWidth*.78,behavior:motionDisabled()?'auto':'smooth'});
   previousGallery.addEventListener('click',()=>moveGallery(-1));
@@ -84,6 +88,7 @@
   pauseButton.addEventListener('click',()=>{const paused=pauseButton.getAttribute('aria-pressed')!=='true';pauseButton.setAttribute('aria-pressed',String(paused));pauseButton.setAttribute('aria-label',paused?'Retomar faixa de ambientes':'Pausar faixa de ambientes');pauseButton.innerHTML=paused?'<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg>':'<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg>';environment.classList.toggle('is-paused',paused);});
   const root=document.documentElement;
   const hero=document.querySelector('.hero');
+  const heroPhoto=hero.querySelector('.hero-photo');
   const header=document.querySelector('.header');
   const followPhoto=document.querySelector('.follow-up-photo');
   const processSteps=[...document.querySelectorAll('.steps li')];
@@ -94,28 +99,52 @@
   mobileContact.inert=true;
   let scrollFrame=0;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  const lastStyleValues=new WeakMap();
+  let lastActiveStep=-1;
+  let lastMobileVisible=false;
+  function setMotionValue(element,key,value){
+    let values=lastStyleValues.get(element);
+    if(!values){values=new Map();lastStyleValues.set(element,values);}
+    if(values.get(key)!==value){element.style.setProperty(key,value);values.set(key,value);}
+  }
   function updateScroll(){
     scrollFrame=0;
+    // Batch every layout read before writing styles. Custom properties stay on
+    // their own component instead of invalidating styles throughout the page.
     const viewportHeight=innerHeight;
+    const viewportWidth=innerWidth;
+    const top=scrollY;
     const scrollRange=Math.max(1,root.scrollHeight-viewportHeight);
-    root.style.setProperty('--page-progress',String(clamp(scrollY/scrollRange,0,1)));
-    header.classList.toggle('has-scrolled',scrollY>24);
     const heroRect=hero.getBoundingClientRect();
     const followRect=followPhoto.getBoundingClientRect();
-    if(!motionDisabled()&&innerWidth>760){
-      root.style.setProperty('--hero-photo-y',-clamp(-heroRect.top*.055,0,28)+'px');
-      followPhoto.style.setProperty('--follow-photo-y',clamp((viewportHeight/2-followRect.top-followRect.height/2)*.045,-24,24)+'px');
-    }else{root.style.setProperty('--hero-photo-y','0px');followPhoto.style.setProperty('--follow-photo-y','0px');}
+    const stepsRect=processList.getBoundingClientRect();
+    const contactTop=contactSection.getBoundingClientRect().top;
+    const stepTops=processSteps.map(step=>step.getBoundingClientRect().top);
+    const disabled=motionDisabled();
     const readPoint=viewportHeight*.52;
     let active=0;
-    processSteps.forEach((step,index)=>{if(step.getBoundingClientRect().top<readPoint)active=index;});
-    processSteps.forEach((step,index)=>step.classList.toggle('is-current',index===active));
-    currentNumber.textContent=String(active+1).padStart(2,'0');
-    const stepsRect=processList.getBoundingClientRect();
-    processList.style.setProperty('--process-progress',String(clamp((readPoint-stepsRect.top-31)/Math.max(1,stepsRect.height-90),0,1)));
-    const showMobileContact=heroRect.bottom<110&&contactSection.getBoundingClientRect().top>viewportHeight-100;
-    mobileContact.classList.toggle('is-visible',showMobileContact);
-    mobileContact.inert=!showMobileContact;
+    stepTops.forEach((stepTop,index)=>{if(stepTop<readPoint)active=index;});
+    const showMobileContact=heroRect.bottom<110&&contactTop>viewportHeight-100;
+    setMotionValue(header,'--page-progress',clamp(top/scrollRange,0,1).toFixed(4));
+    header.classList.toggle('has-scrolled',top>24);
+    if(!disabled&&viewportWidth>760){
+      setMotionValue(heroPhoto,'--hero-photo-y',-clamp(-heroRect.top*.055,0,28)+'px');
+      setMotionValue(followPhoto,'--follow-photo-y',clamp((viewportHeight/2-followRect.top-followRect.height/2)*.045,-24,24)+'px');
+    }else{
+      setMotionValue(heroPhoto,'--hero-photo-y','0px');
+      setMotionValue(followPhoto,'--follow-photo-y','0px');
+    }
+    if(active!==lastActiveStep){
+      processSteps.forEach((step,index)=>step.classList.toggle('is-current',index===active));
+      currentNumber.textContent=String(active+1).padStart(2,'0');
+      lastActiveStep=active;
+    }
+    setMotionValue(processList,'--process-progress',clamp((readPoint-stepsRect.top-31)/Math.max(1,stepsRect.height-90),0,1).toFixed(4));
+    if(showMobileContact!==lastMobileVisible){
+      mobileContact.classList.toggle('is-visible',showMobileContact);
+      mobileContact.inert=!showMobileContact;
+      lastMobileVisible=showMobileContact;
+    }
   }
   function scheduleScroll(){if(!scrollFrame)scrollFrame=requestAnimationFrame(updateScroll);}
   addEventListener('scroll',scheduleScroll,{passive:true});
